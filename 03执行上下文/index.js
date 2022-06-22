@@ -1,11 +1,9 @@
-function foo() {
-    console.log('foo1');
+var scope = "global scope";
+function checkscope(){
+    var scope = "local scope";
+    function f(){
+        return scope;
+    }
+    return f;
 }
-
-foo();  // foo2
-
-function foo() {
-    console.log('foo2');
-}
-
-foo();
+console.log(checkscope()())

@@ -23,11 +23,18 @@ type Record1<K extends keyof any, T> = {
 
 type Omit1<T, K extends keyof T> = Pick1<T, Exclude1<keyof T, K>>
 
+type WithOut<T, U> = {
+    [p in Exclude<keyof T, keyof U>]?: never
+}
+
+type XOR<T, U> = (WithOut<T, U> & U) | (WithOut<U, T> & T);
+
 type Pick1<T, P extends keyof T> = {
     [U in P]: T[U]
 }
 
 type Exclude1<T, U> = T extends U ? never : T;
+
 
 type E = Exclude1<'a' | 'b' | 'c', 'b' | 'd'>
 
@@ -43,7 +50,6 @@ type ConstructorParameters1<T extends new (...args: any[]) => any> = T extends n
 type ReturnType1<T extends (...args: any[]) => any> = T extends (...args: any[]) => infer P ? P : never
 
 type InstanceType1<T extends new (...args: any[]) => any> = T extends new (...args: any[]) => infer P ? P : never
-
 
 type PromiseType1<T extends Promise<any>> = T extends Promise<infer P> ? P : never
 
